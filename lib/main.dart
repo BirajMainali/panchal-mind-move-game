@@ -14,7 +14,6 @@ class DiagonalBorderPainter extends CustomPainter {
 
     final center = size.center(Offset.zero);
 
-    // Draw diagonals from the center to each corner
     canvas.drawLine(Offset.zero, center, paint); // Top-Left
     canvas.drawLine(Offset(size.width, 0), center, paint); // Top-Right
     canvas.drawLine(Offset(0, size.height), center, paint); // Bottom-Left
@@ -55,13 +54,39 @@ class MyApp extends StatelessWidget {
                   ),
                   itemCount: 4,
                   itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      decoration: BoxDecoration(
-                        border: Border.all(
-                          color: Colors.black,
-                          width: 2,
+                    return Stack(
+                      children: [
+                        Container(
+                          decoration: BoxDecoration(
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2,
+                            ),
+                          ),
                         ),
-                      ),
+                        if (index == 0)
+                          const Positioned(
+                            top: 0,
+                            left: 0,
+                            child: Icon(Icons.star, size: 24, color: Colors.blue),
+                          ),
+                        if (index != 0)
+                          const Positioned(
+                            top: 0,
+                            right: 0,
+                            child: Icon(Icons.star, size: 24, color: Colors.red),
+                          ),
+                        const Positioned(
+                          bottom: 0,
+                          left: 0,
+                          child: Icon(Icons.star, size: 24, color: Colors.green),
+                        ),
+                        const Positioned(
+                          bottom: 0,
+                          right: 0,
+                          child: Icon(Icons.star, size: 24, color: Colors.yellowAccent),
+                        ),
+                      ],
                     );
                   },
                 ),
