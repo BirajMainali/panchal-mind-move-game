@@ -64,28 +64,46 @@ class MyApp extends StatelessWidget {
                             ),
                           ),
                         ),
-                        if (index == 0)
+                        if (index != 2 && index != 3)
+                          Positioned(
+                            top: (index == 0)
+                                ? -7
+                                : (index == 1)
+                                    ? -6
+                                    : 0,
+                            left: (index == 0)
+                                ? -7
+                                : (index == 1)
+                                    ? -15
+                                    : 0,
+                            child: const Icon(Icons.circle_outlined, size: 30, color: Colors.blue),
+                          ),
+                        if (index != 3 && index != 2)
+                          Positioned(
+                            top: (index == 0)
+                                ? -7
+                                : (index == 1)
+                                    ? -4
+                                    : 0,
+                            right: (index == 0)
+                                ? -7
+                                : (index == 1)
+                                    ? -15
+                                    : 0,
+                            child: Icon(Icons.circle_outlined, size: 30, color: Colors.red),
+                          ),
+                        if (index != 1)
                           const Positioned(
-                            top: 0,
+                            bottom: 0,
                             left: 0,
-                            child: Icon(Icons.star, size: 24, color: Colors.blue),
+                            child: Icon(Icons.circle_outlined, size: 24, color: Colors.green),
                           ),
-                        if (index != 0)
+                        if (index != 2)
                           const Positioned(
-                            top: 0,
+                            bottom: 0,
                             right: 0,
-                            child: Icon(Icons.star, size: 24, color: Colors.red),
+                            child: Icon(Icons.circle_outlined, size: 24, color: Colors.purple),
                           ),
-                        const Positioned(
-                          bottom: 0,
-                          left: 0,
-                          child: Icon(Icons.star, size: 24, color: Colors.green),
-                        ),
-                        const Positioned(
-                          bottom: 0,
-                          right: 0,
-                          child: Icon(Icons.star, size: 24, color: Colors.yellowAccent),
-                        ),
                       ],
                     );
                   },
