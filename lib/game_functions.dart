@@ -1,29 +1,44 @@
 class GameFunctions {
+  static String turn = "X";
   static List<List<String>> matrix = [
     ['', '', ''],
     ['', '', ''],
     ['', '', ''],
   ];
 
-  static void setXPositionTo({required int row, required int column}) {
-    if (!canSetPositionTo(row: row, column: column)) return;
+  static void _setTurn() {
+    turn = turn == "X" ? "Y" : "X";
+  }
+
+  static placePin({required int row, required int column}) {
+    if (turn == "X") {
+      _setXPositionTo(row: row, column: column);
+    } else {
+      _setYPositionTo(row: row, column: column);
+    }
+  }
+
+  static void _setXPositionTo({required int row, required int column}) {
+    if (!_canSetPositionTo(row: row, column: column)) return;
     matrix[row][column] = 'X';
+    _setTurn();
   }
 
-  static void setYPositionTo({required int row, required int column}) {
-    if (!canSetPositionTo(row: row, column: column)) return;
+  static void _setYPositionTo({required int row, required int column}) {
+    if (!_canSetPositionTo(row: row, column: column)) return;
     matrix[row][column] = 'Y';
+    _setTurn();
   }
 
-  static bool canSetPositionTo({required int row, required int column}) {
+  static bool _canSetPositionTo({required int row, required int column}) {
     return matrix[row][column] == '';
   }
 
   static bool checkWin(String identifier) {
-    return checkRows(identifier) || checkColumns(identifier) || checkDiagonals(identifier);
+    return _checkRows(identifier) || _checkColumns(identifier) || _checkDiagonals(identifier);
   }
 
-  static bool checkRows(String identifier) {
+  static bool _checkRows(String identifier) {
     for (int i = 0; i < 3; i++) {
       if (matrix[i][0] == identifier && matrix[i][1] == identifier && matrix[i][2] == identifier) {
         return true;
@@ -32,7 +47,7 @@ class GameFunctions {
     return false;
   }
 
-  static bool checkColumns(String identifier) {
+  static bool _checkColumns(String identifier) {
     for (int i = 0; i < 3; i++) {
       if (matrix[0][i] == identifier && matrix[1][i] == identifier && matrix[2][i] == identifier) {
         return true;
@@ -41,7 +56,7 @@ class GameFunctions {
     return false;
   }
 
-  static bool checkDiagonals(String identifier) {
+  static bool _checkDiagonals(String identifier) {
     if (matrix[0][0] == identifier && matrix[1][1] == identifier && matrix[2][2] == identifier) {
       return true;
     }

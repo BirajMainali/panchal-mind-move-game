@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:panchal/game_functions.dart';
 
 void main() {
   runApp(MyApp());
@@ -9,7 +10,7 @@ class DiagonalBorderPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final paint = Paint()
       ..color = Colors.black
-      ..strokeWidth = 3
+      ..strokeWidth = 1
       ..style = PaintingStyle.stroke;
 
     final center = size.center(Offset.zero);
@@ -32,92 +33,248 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final Size pins = const Size(-10, 169);
+  final Size pins = const Size(-9, 170);
 
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
         appBar: AppBar(
-          title: const Text('Positioning Game'),
+          title: const Text("Panchal"),
         ),
-        body: Center(
-          child: Stack(
-            children: [
-              Container(
-                width: MediaQuery.of(context).size.width * 0.9,
-                height: MediaQuery.of(context).size.width * 0.9,
-                decoration: BoxDecoration(
-                  border: Border.all(
-                    color: Colors.black,
-                    width: 2,
-                  ),
-                ),
-                child: Stack(
-                  children: [
-                    GridView.builder(
-                      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                        crossAxisCount: 2,
-                        crossAxisSpacing: 0,
-                        mainAxisSpacing: 0,
+        body: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const SizedBox(height: 20),
+            Center(
+              child: Stack(
+                children: [
+                  Container(
+                    width: MediaQuery.of(context).size.width * 0.9,
+                    height: MediaQuery.of(context).size.width * 0.9,
+                    decoration: BoxDecoration(
+                      border: Border.all(
+                        color: Colors.black,
+                        width: 0.5,
                       ),
-                      itemCount: 4,
-                      itemBuilder: (BuildContext context, int index) {
-                        return Container(
-                          decoration: BoxDecoration(
-                            border: Border.all(
-                              color: Colors.black,
-                              width: 2,
+                    ),
+                    child: Stack(
+                      children: [
+                        GridView.builder(
+                          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            crossAxisSpacing: 0,
+                            mainAxisSpacing: 0,
+                          ),
+                          itemCount: 4,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Container(
+                              decoration: BoxDecoration(
+                                border: Border.all(
+                                  color: Colors.black,
+                                  width: 0.5,
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                        CustomPaint(
+                          painter: DiagonalBorderPainter(),
+                          size: const Size(400, 400),
+                        ),
+                      ],
+                    ),
+                  ),
+                  Positioned(
+                      top: pins.width,
+                      left: pins.width,
+                      child: GestureDetector(
+                        onTap: () {
+                          GameFunctions.placePin(row: 0, column: 0);
+                          setState(() {});
+                        },
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                GameFunctions.matrix[0][0],
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
                             ),
                           ),
-                        );
-                      },
-                    ),
-                    CustomPaint(
-                      painter: DiagonalBorderPainter(),
-                      size: const Size(400, 400),
-                    ),
-                  ],
-                ),
+                        ),
+                      )),
+                  Positioned(
+                      top: pins.height,
+                      left: pins.width,
+                      child: GestureDetector(
+                        onTap: () {
+                          GameFunctions.placePin(row: 1, column: 0);
+                          setState(() {});
+                        },
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                GameFunctions.matrix[1][0],
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )),
+                  Positioned(
+                      top: pins.height * 2,
+                      left: pins.width,
+                      child: GestureDetector(
+                        onTap: () {
+                          GameFunctions.placePin(row: 2, column: 0);
+                          setState(() {});
+                        },
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                GameFunctions.matrix[2][0],
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )),
+                  Positioned(
+                      top: pins.height,
+                      left: pins.width,
+                      child: GestureDetector(
+                        onTap: () {
+                          GameFunctions.placePin(row: 1, column: 0);
+                          setState(() {});
+                        },
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                GameFunctions.matrix[1][0],
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )),
+                  Positioned(
+                      top: pins.width,
+                      left: pins.height,
+                      child: GestureDetector(
+                        onTap: () {
+                          GameFunctions.placePin(row: 0, column: 1);
+                          setState(() {});
+                        },
+                        child: SizedBox(
+                          width: 40,
+                          height: 40,
+                          child: Container(
+                            alignment: Alignment.center,
+                            decoration: BoxDecoration(
+                              color: Colors.white,
+                              borderRadius: BorderRadius.circular(20),
+                              border: Border.all(
+                                color: Colors.black,
+                                width: 2,
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                GameFunctions.matrix[0][1],
+                                style: const TextStyle(
+                                  fontSize: 20,
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      )),
+                  Positioned(
+                      top: pins.height,
+                      left: pins.height * 2,
+                      child: const Icon(Icons.circle, color: Colors.blue, size: 40)),
+                  Positioned(
+                      top: 0, left: pins.height * 2, child: const Icon(Icons.circle, color: Colors.orange, size: 40)),
+                  Positioned(
+                      top: pins.height * 2,
+                      left: pins.height,
+                      child: const Icon(Icons.circle, color: Colors.pink, size: 40)),
+                  Positioned(
+                      top: pins.height * 2,
+                      left: pins.height * 2,
+                      child: const Icon(Icons.circle, color: Colors.teal, size: 40)),
+                  Positioned(
+                      top: pins.height,
+                      left: pins.height,
+                      child: const Icon(Icons.circle, color: Colors.brown, size: 40)),
+                ],
               ),
-              Positioned(
-                  top: pins.width,
-                  left: pins.width,
-                  child: const Icon(
-                    Icons.circle,
-                    color: Colors.purple,
-                    size: 40,
-                  )),
-              Positioned(
-                  top: pins.height,
-                  left: pins.width,
-                  child: const Icon(
-                    Icons.circle,
-                    color: Colors.green,
-                    size: 40,
-                  )),
-              Positioned(
-                  top: pins.height * 2, left: pins.width, child: const Icon(Icons.circle, color: Colors.red, size: 40)),
-              Positioned(
-                  top: pins.width, left: pins.height, child: const Icon(Icons.circle, color: Colors.yellow, size: 40)),
-              Positioned(
-                  top: pins.height,
-                  left: pins.height * 2,
-                  child: const Icon(Icons.circle, color: Colors.blue, size: 40)),
-              Positioned(
-                  top: 0, left: pins.height * 2, child: const Icon(Icons.circle, color: Colors.orange, size: 40)),
-              Positioned(
-                  top: pins.height * 2,
-                  left: pins.height,
-                  child: const Icon(Icons.circle, color: Colors.pink, size: 40)),
-              Positioned(
-                  top: pins.height * 2,
-                  left: pins.height * 2,
-                  child: const Icon(Icons.circle, color: Colors.teal, size: 40)),
-              Positioned(
-                  top: pins.height, left: pins.height, child: const Icon(Icons.circle, color: Colors.brown, size: 40)),
-            ],
-          ),
+            ),
+            Text(
+              "Turn: ${GameFunctions.turn}",
+              style: const TextStyle(
+                fontSize: 20,
+              ),
+            ),
+            const SizedBox(height: 20),
+          ],
         ),
       ),
     );
