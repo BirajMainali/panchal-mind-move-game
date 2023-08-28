@@ -33,7 +33,7 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  final Size pins = const Size(-9, 170);
+  final Size pins = const Size(-10, 145);
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +56,7 @@ class _MyAppState extends State<MyApp> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black,
-                        width: 0.5,
+                        width: 2,
                       ),
                     ),
                     child: Stack(
@@ -73,7 +73,7 @@ class _MyAppState extends State<MyApp> {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.black,
-                                  width: 0.5,
+                                  width: 2,
                                 ),
                               ),
                             );
@@ -86,326 +86,16 @@ class _MyAppState extends State<MyApp> {
                       ],
                     ),
                   ),
-                  Positioned(
-                      top: pins.width,
-                      left: pins.width,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 0, column: 0);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[0][0],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.height,
-                      left: pins.width,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 1, column: 0);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[1][0],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.height * 2,
-                      left: pins.width,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 2, column: 0);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[2][0],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.height,
-                      left: pins.width,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 1, column: 0);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[1][0],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.width,
-                      left: pins.height,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 0, column: 1);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[0][1],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.height,
-                      left: pins.height * 2,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 1, column: 2);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[1][2],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.width,
-                      left: pins.height * 2,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 0, column: 2);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[0][2],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.height * 2,
-                      left: pins.height,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 2, column: 1);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[2][1],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.height * 2,
-                      left: pins.height * 2,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 2, column: 2);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[2][2],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
-                  Positioned(
-                      top: pins.height,
-                      left: pins.height,
-                      child: GestureDetector(
-                        onTap: () {
-                          GameFunctions.placePin(row: 1, column: 1);
-                          setState(() {});
-                        },
-                        child: SizedBox(
-                          width: 40,
-                          height: 40,
-                          child: Container(
-                            alignment: Alignment.center,
-                            decoration: BoxDecoration(
-                              color: Colors.white,
-                              borderRadius: BorderRadius.circular(20),
-                              border: Border.all(
-                                color: Colors.black,
-                                width: 2,
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                GameFunctions.matrix[1][1],
-                                style: const TextStyle(
-                                  fontSize: 20,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      )),
+                  buildPositioned(top: pins.width, left: pins.width, row: 0, column: 0),
+                  buildPositioned(top: pins.height, left: pins.width, row: 1, column: 0),
+                  buildPositioned(top: pins.height * 2, left: pins.width, row: 2, column: 0),
+                  buildPositioned(top: pins.height, left: pins.width, row: 1, column: 0),
+                  buildPositioned(top: pins.width, left: pins.height, row: 0, column: 1),
+                  buildPositioned(top: pins.height, left: pins.height * 2, row: 1, column: 2),
+                  buildPositioned(top: pins.width, left: pins.height * 2, row: 0, column: 2),
+                  buildPositioned(top: pins.height * 2, left: pins.height, row: 2, column: 1),
+                  buildPositioned(top: pins.height * 2, left: pins.height * 2, row: 2, column: 2),
+                  buildPositioned(top: pins.height * 2, left: pins.height, row: 1, column: 1),
                 ],
               ),
             ),
@@ -420,5 +110,40 @@ class _MyAppState extends State<MyApp> {
         ),
       ),
     );
+  }
+
+  Positioned buildPositioned({required double top, required double left, required int row, required int column}) {
+    return Positioned(
+        top: top,
+        left: left,
+        child: GestureDetector(
+          onTap: () {
+            GameFunctions.placePin(row: row, column: column);
+            setState(() {});
+          },
+          child: SizedBox(
+            width: 40,
+            height: 40,
+            child: Container(
+              alignment: Alignment.center,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+                border: Border.all(
+                  color: Colors.black,
+                  width: 2,
+                ),
+              ),
+              child: Center(
+                child: Text(
+                  GameFunctions.matrix[row][column],
+                  style: const TextStyle(
+                    fontSize: 20,
+                  ),
+                ),
+              ),
+            ),
+          ),
+        ));
   }
 }

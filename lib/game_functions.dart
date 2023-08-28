@@ -10,28 +10,48 @@ class GameFunctions {
     turn = turn == "X" ? "Y" : "X";
   }
 
-  static placePin({required int row, required int column}) {
-    if (turn == "X") {
-      _setXPositionTo(row: row, column: column);
-    } else {
-      _setYPositionTo(row: row, column: column);
+  static bool isInitialPinsArePlaced() {
+    int count = 0;
+    for (int i = 0; i < matrix.length; i++) {
+      for (int j = 0; j < matrix.length; j++) {
+        if (matrix[i][j] == turn) {
+          count++;
+        }
+      }
     }
+    return count == 3;
   }
 
-  static void _setXPositionTo({required int row, required int column}) {
+  static placePin({required int row, required int column}) {
+    if (isInitialPinsArePlaced()) {
+      // _replacePositionOf(row: row, column: column, player: turn);
+      return;
+    }
+    _setPosition(row: row, column: column, player: turn);
+  }
+
+  static _setPosition({required int row, required int column, required String player}) {
     if (!_canSetPositionTo(row: row, column: column)) return;
-    matrix[row][column] = 'X';
+    if (matrix[row][column] == player) {
+      matrix[row][column] = '';
+      return;
+    }
+    matrix[row][column] = player;
     _setTurn();
   }
 
-  static void _setYPositionTo({required int row, required int column}) {
+  static replacePin({required int row, required int column}) {
+    _replacePositionOf(row: row, column: column, player: turn);
+  }
+
+  static void _replacePositionOf({required int row, required int column, required String player}) {
     if (!_canSetPositionTo(row: row, column: column)) return;
     matrix[row][column] = 'Y';
     _setTurn();
   }
 
   static bool _canSetPositionTo({required int row, required int column}) {
-    return matrix[row][column] == '';
+    return matrix[row][column] == '' || matrix[row][column] == turn;
   }
 
   static bool checkWin(String identifier) {
