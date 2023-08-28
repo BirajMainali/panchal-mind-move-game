@@ -38,6 +38,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           title: const Text("Panchal"),
@@ -56,7 +57,7 @@ class _MyAppState extends State<MyApp> {
                     decoration: BoxDecoration(
                       border: Border.all(
                         color: Colors.black,
-                        width: 2,
+                        width: 0.5,
                       ),
                     ),
                     child: Stack(
@@ -73,7 +74,7 @@ class _MyAppState extends State<MyApp> {
                               decoration: BoxDecoration(
                                 border: Border.all(
                                   color: Colors.black,
-                                  width: 2,
+                                  width: 0.5,
                                 ),
                               ),
                             );
@@ -87,15 +88,14 @@ class _MyAppState extends State<MyApp> {
                     ),
                   ),
                   buildPositioned(top: pins.width, left: pins.width, row: 0, column: 0),
-                  buildPositioned(top: pins.height, left: pins.width, row: 1, column: 0),
-                  buildPositioned(top: pins.height * 2, left: pins.width, row: 2, column: 0),
-                  buildPositioned(top: pins.height, left: pins.width, row: 1, column: 0),
                   buildPositioned(top: pins.width, left: pins.height, row: 0, column: 1),
-                  buildPositioned(top: pins.height, left: pins.height * 2, row: 1, column: 2),
                   buildPositioned(top: pins.width, left: pins.height * 2, row: 0, column: 2),
+                  buildPositioned(top: pins.height, left: pins.width, row: 1, column: 0),
+                  buildPositioned(top: pins.height, left: pins.height, row: 1, column: 1),
+                  buildPositioned(top: pins.height, left: pins.height * 2, row: 1, column: 2),
+                  buildPositioned(top: pins.height * 2, left: pins.width, row: 2, column: 0),
                   buildPositioned(top: pins.height * 2, left: pins.height, row: 2, column: 1),
                   buildPositioned(top: pins.height * 2, left: pins.height * 2, row: 2, column: 2),
-                  buildPositioned(top: pins.height * 2, left: pins.height, row: 1, column: 1),
                 ],
               ),
             ),
@@ -131,7 +131,7 @@ class _MyAppState extends State<MyApp> {
                 borderRadius: BorderRadius.circular(20),
                 border: Border.all(
                   color: Colors.black,
-                  width: 2,
+                  width: 0,
                 ),
               ),
               child: Center(
