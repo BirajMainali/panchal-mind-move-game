@@ -27,13 +27,11 @@ class GameFunctions {
     return count == 3;
   }
 
-  static placePin({required int row, required int column}) {
+  static void placePin({required int row, required int column}) {
     if (isInitialPinsArePlaced()) {
       var (x, y) = _getNearByEmptyPosition(row: row, column: column);
-      if (x != row || y != column) {
-        _replacePositionOf(row: x, column: y, player: player);
-        return;
-      }
+      matrix[row][column] = player;
+      matrix[x][y] = '';
       return;
     }
     _setPosition(row: row, column: column, player: player);
