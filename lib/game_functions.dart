@@ -1,5 +1,6 @@
 class GameFunctions {
-  static String turn = "X";
+  static String player = "X";
+  static String winner = "";
   static List<List<String>> matrix = [
     ['', '', ''],
     ['', '', ''],
@@ -7,14 +8,18 @@ class GameFunctions {
   ];
 
   static void _setTurn() {
-    turn = turn == "X" ? "Y" : "X";
+    if (checkWin(player)) {
+      winner = player;
+      return;
+    }
+    player = player == "X" ? "Y" : "X";
   }
 
   static bool isInitialPinsArePlaced() {
     int count = 0;
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix.length; j++) {
-        if (matrix[i][j] == turn) {
+        if (matrix[i][j] == player) {
           count++;
         }
       }
@@ -24,24 +29,24 @@ class GameFunctions {
 
   static placePin({required int row, required int column}) {
     if (isInitialPinsArePlaced()) {
-      // _replacePositionOf(row: row, column: column, player: turn);
+      var (x, y) = _getNearByEmptyPosition(row: row, column: column);
+      if (x != row || y != column) {
+        _replacePositionOf(row: x, column: y, player: player);
+        return;
+      }
       return;
     }
-    _setPosition(row: row, column: column, player: turn);
+    _setPosition(row: row, column: column, player: player);
   }
 
   static _setPosition({required int row, required int column, required String player}) {
     if (!_canSetPositionTo(row: row, column: column)) return;
-    if (matrix[row][column] == player) {
-      matrix[row][column] = '';
-      return;
-    }
     matrix[row][column] = player;
     _setTurn();
   }
 
   static replacePin({required int row, required int column}) {
-    _replacePositionOf(row: row, column: column, player: turn);
+    _replacePositionOf(row: row, column: column, player: player);
   }
 
   static void _replacePositionOf({required int row, required int column, required String player}) {
@@ -51,7 +56,8 @@ class GameFunctions {
   }
 
   static bool _canSetPositionTo({required int row, required int column}) {
-    return matrix[row][column] == '' || matrix[row][column] == turn;
+    if (checkWin(player)) return false;
+    return matrix[row][column] == '' || matrix[row][column] == player;
   }
 
   static bool checkWin(String identifier) {
@@ -84,6 +90,24 @@ class GameFunctions {
       return true;
     }
     return false;
+  }
+
+  static (int row, int column) _getNearByEmptyPosition({required int row, required int column}) {
+    for (int r = -1; r <= 1; r++) {
+      for (int c = -1; c <= 1; c++) {
+        if (r == 0 && c == 0) continue;
+        int newRow = row + r;
+        int newCol = column + c;
+        if (newRow >= 0 &&
+            newRow < matrix.length &&
+            newCol >= 0 &&
+            newCol < matrix[newRow].length &&
+            matrix[newRow][newCol] == '') {
+          return (newRow, newCol);
+        }
+      }
+    }
+    return (row, column);
   }
 
   static void reset() {
