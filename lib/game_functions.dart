@@ -1,7 +1,9 @@
+import 'package:vibration/vibration.dart';
+
 class GameFunctions {
   static String player = "X";
-  static String XPlayer = "X";
-  static String YPlayer = "Y";
+  static String player1 = "X";
+  static String player2 = "Y";
   static String winner = "";
   static (int? row, int? column) active = (null, null);
   static List<List<String>> matrix = [
@@ -15,7 +17,7 @@ class GameFunctions {
       winner = player;
       return;
     }
-    player = player == XPlayer ? YPlayer : XPlayer;
+    player = player == player1 ? player2 : player1;
   }
 
   static int getPins(String player) {
@@ -55,7 +57,7 @@ class GameFunctions {
           return;
         }
         if (!_canSetPositionTo(row: row, column: column)) return;
-        if (activeRow != 1 && activeColumn != 1) {
+        if ((activeRow != 1 && activeColumn != 1) && (row != 1 && column != 1)) {
           var distance = (row - activeRow).abs() + (column - activeColumn).abs();
           if (distance != 1) return;
         }
@@ -126,7 +128,11 @@ class GameFunctions {
 
   static bool _canSetPositionTo({required int row, required int column}) {
     if (checkWin(player)) return false;
-    return matrix[row][column] == '' || matrix[row][column] == player;
+    var canSet = matrix[row][column] == '' || matrix[row][column] == player;
+    if (!canSet) {
+      Vibration.vibrate(duration: 250);
+    }
+    return canSet;
   }
 
   static bool checkWin(String identifier) {
@@ -170,4 +176,7 @@ class GameFunctions {
       ['', '', ''],
     ];
   }
+
+  static IsPlayer1() => player == player1;
+  static IsPlayer2() => player == player2;
 }
