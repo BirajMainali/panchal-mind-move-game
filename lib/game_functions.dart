@@ -55,6 +55,7 @@ class GameFunctions {
   }
 
   static bool _hasNearestEmptyPosition({required int row, required int column}) {
+    // Check all adjacent positions, including diagonals
     List<List<int>> directions = [
       [1, 0], // Down
       [-1, 0], // Up

@@ -143,13 +143,16 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           ),
         ),
         const SizedBox(height: 20),
-        if (GameFunctions.winner.isNotEmpty)
-          ElevatedButton(
-              onPressed: () {
-                GameFunctions.reset();
-                setState(() {});
-              },
-              child: const Text('Re-start')),
+        ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              primary: Colors.white,
+              onPrimary: Colors.black,
+            ),
+            onPressed: () {
+              GameFunctions.reset();
+              setState(() {});
+            },
+            child: const Text('Reset Game')),
       ],
     );
   }
