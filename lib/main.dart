@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Flutter App',
       theme: ThemeData(
         primaryColor: Colors.yellowAccent,
-        fontFamily: 'Montserrat',
+        fontFamily: 'Muli',
       ),
       home: const MyHomePage(),
     );
@@ -50,112 +50,143 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
     const width = 300.0;
     const height = 300.0;
     return Column(
-      mainAxisAlignment: MainAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back_ios, color: Colors.white)),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            if (GameFunctions.winner.isEmpty)
+              Text(
+                'Turn : ${getPlayer(GameFunctions.player)}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            if (GameFunctions.winner.isNotEmpty)
+              Text(
+                'Winner : ${getPlayer(GameFunctions.winner)}',
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+          ],
+        ),
         if (GameFunctions.winner.isNotEmpty)
-          Text(
-            'Winner: ${GameFunctions.winner}',
-            style: const TextStyle(
-              fontSize: 30,
-              color: Colors.white,
+          Center(
+              child: ElevatedButton(
+                  onPressed: () {
+                    GameFunctions.reset();
+                    setState(() {});
+                  },
+                  child: const Text('Reset'))),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < GameFunctions.getRemainingPins(GameFunctions.XPlayer); i++)
+              const Icon(
+                Icons.circle,
+                color: Colors.black,
+                size: 25,
+              ),
+          ],
+        ),
+        Center(
+          child: Container(
+            width: width,
+            height: height,
+            decoration: BoxDecoration(
+              image: const DecorationImage(
+                image: AssetImage('assets/images/board-wood.jpeg'),
+                fit: BoxFit.cover,
+              ),
+              borderRadius: BorderRadius.circular(5),
+              border: Border.all(color: Colors.white60, width: borderWidth),
             ),
-          ),
-        Text(
-          'Turn: ${getPlayer(GameFunctions.player)}',
-          style: const TextStyle(
-            fontSize: 30,
-            color: Colors.white,
+            child: Stack(
+              children: [
+                Positioned(
+                  left: 0,
+                  top: 150,
+                  right: 0,
+                  child: Container(
+                    height: 3,
+                    color: Colors.black45,
+                  ),
+                ),
+                Positioned(
+                  top: 0,
+                  left: 150,
+                  bottom: 0,
+                  child: Container(
+                    width: 3,
+                    color: Colors.black45,
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  top: 0,
+                  child: Container(
+                    width: 424 + borderWidth,
+                    height: 3,
+                    color: Colors.black45,
+                    transform: Matrix4.rotationZ(45 * 0.0174533),
+                  ),
+                ),
+                Positioned(
+                  left: 0,
+                  bottom: 0,
+                  child: Container(
+                    width: 424 + borderWidth,
+                    height: 3,
+                    color: Colors.black45,
+                    transform: Matrix4.rotationZ(-45 * 0.0174533),
+                  ),
+                ),
+                // 0,0
+                _buildPositioned(
+                  row: 0,
+                  column: 0,
+                  top: -6,
+                  left: -6,
+                ),
+                // 0,1
+                _buildPositioned(row: 0, column: 1, top: -6, left: (width / 2) - 20),
+                // 0,2
+                _buildPositioned(row: 0, column: 2, top: -6, right: -6),
+                // 1,0
+                _buildPositioned(row: 1, column: 0, top: width / 2 - 18, left: -6),
+                // 1,1
+                _buildPositioned(row: 1, column: 1, top: width / 2 - 20, left: width / 2 - 20),
+                // 1,2
+                _buildPositioned(row: 1, column: 2, top: width / 2 - 20, right: -6),
+                // 2,0
+                _buildPositioned(row: 2, column: 0, top: width - 38, left: -6),
+                // 2,1
+                _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 18),
+                // 2,2
+                _buildPositioned(row: 2, column: 2, top: width - 38, right: -6),
+              ],
+            ),
           ),
         ),
         const SizedBox(height: 20),
-        Container(
-          width: width,
-          height: height,
-          decoration: BoxDecoration(
-            image: const DecorationImage(
-              image: AssetImage('assets/images/board-wood.jpeg'),
-              fit: BoxFit.cover,
-            ),
-            borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.white60, width: borderWidth),
-          ),
-          child: Stack(
-            children: [
-              Positioned(
-                left: 0,
-                top: 150,
-                right: 0,
-                child: Container(
-                  height: 3,
-                  color: Colors.black45,
-                ),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            for (int i = 0; i < GameFunctions.getRemainingPins(GameFunctions.YPlayer); i++)
+              const Icon(
+                Icons.circle,
+                color: Colors.redAccent,
+                size: 25,
               ),
-              Positioned(
-                top: 0,
-                left: 150,
-                bottom: 0,
-                child: Container(
-                  width: 3,
-                  color: Colors.black45,
-                ),
-              ),
-              Positioned(
-                left: 0,
-                top: 0,
-                child: Container(
-                  width: 424 + borderWidth,
-                  height: 3,
-                  color: Colors.black45,
-                  transform: Matrix4.rotationZ(45 * 0.0174533),
-                ),
-              ),
-              Positioned(
-                left: 0,
-                bottom: 0,
-                child: Container(
-                  width: 424 + borderWidth,
-                  height: 3,
-                  color: Colors.black45,
-                  transform: Matrix4.rotationZ(-45 * 0.0174533),
-                ),
-              ),
-              // 0,0
-              _buildPositioned(
-                row: 0,
-                column: 0,
-                top: -6,
-                left: -6,
-              ),
-              // 0,1
-              _buildPositioned(row: 0, column: 1, top: -6, left: (width / 2) - 20),
-              // 0,2
-              _buildPositioned(row: 0, column: 2, top: -6, right: -6),
-              // 1,0
-              _buildPositioned(row: 1, column: 0, top: width / 2 - 18, left: -6),
-              // 1,1
-              _buildPositioned(row: 1, column: 1, top: width / 2 - 20, left: width / 2 - 20),
-              // 1,2
-              _buildPositioned(row: 1, column: 2, top: width / 2 - 20, right: -6),
-              // 2,0
-              _buildPositioned(row: 2, column: 0, top: width - 38, left: -6),
-              // 2,1
-              _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 18),
-              // 2,2
-              _buildPositioned(row: 2, column: 2, top: width - 38, right: -6),
-            ],
-          ),
+          ],
         ),
-        const SizedBox(height: 20),
-        ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              primary: Colors.white,
-              onPrimary: Colors.black,
-            ),
-            onPressed: () {
-              GameFunctions.reset();
-              setState(() {});
-            },
-            child: const Text('Reset Game')),
       ],
     );
   }

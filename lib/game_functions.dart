@@ -1,5 +1,7 @@
 class GameFunctions {
   static String player = "X";
+  static String XPlayer = "X";
+  static String YPlayer = "Y";
   static String winner = "";
   static (int? row, int? column) active = (null, null);
   static List<List<String>> matrix = [
@@ -13,10 +15,10 @@ class GameFunctions {
       winner = player;
       return;
     }
-    player = player == "X" ? "Y" : "X";
+    player = player == XPlayer ? YPlayer : XPlayer;
   }
 
-  static int getRemainingPins(String player) {
+  static int getPins(String player) {
     int count = 0;
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix.length; j++) {
@@ -28,8 +30,12 @@ class GameFunctions {
     return count;
   }
 
+  static int getRemainingPins(String player) {
+    return 3 - getPins(player);
+  }
+
   static bool _isInitialPinsArePlaced() {
-    int count = getRemainingPins(player);
+    int count = getPins(player);
     return count >= 3;
   }
 
