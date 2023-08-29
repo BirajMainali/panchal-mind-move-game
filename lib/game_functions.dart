@@ -1,6 +1,7 @@
 class GameFunctions {
   static String player = "X";
   static String winner = "";
+  static (int? row, int? column) active = (null, null);
   static List<List<String>> matrix = [
     ['', '', ''],
     ['', '', ''],
@@ -15,7 +16,7 @@ class GameFunctions {
     player = player == "X" ? "Y" : "X";
   }
 
-  static bool isInitialPinsArePlaced() {
+  static bool _isInitialPinsArePlaced() {
     int count = 0;
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix.length; j++) {
@@ -24,17 +25,61 @@ class GameFunctions {
         }
       }
     }
-    return count == 3;
+    return count >= 3;
+  }
+
+  static bool isActiveToReplace({required int r, required int c}) {
+    return active == (r, c) && _isInitialPinsArePlaced();
   }
 
   static void placePin({required int row, required int column}) {
-    if (isInitialPinsArePlaced()) {
-      var (x, y) = _getNearByEmptyPosition(row: row, column: column);
-      matrix[row][column] = player;
-      matrix[x][y] = '';
-      return;
+    var isInitialPinsArePlaced = _isInitialPinsArePlaced();
+
+    if (isInitialPinsArePlaced) {
+      if (active != (null, null)) {
+        var activeRow = active.$1!;
+        var activeColumn = active.$2!;
+        matrix[activeRow][activeColumn] = '';
+        matrix[row][column] = player;
+        active = (null, null);
+        _setTurn();
+      } else {
+        var hasNearestEmptyPosition = _hasNearestEmptyPosition(row: row, column: column);
+        if (hasNearestEmptyPosition && matrix[row][column] == player) {
+          active = (row, column);
+        }
+      }
+    } else {
+      _setPosition(row: row, column: column, player: player);
     }
-    _setPosition(row: row, column: column, player: player);
+  }
+
+  static bool _hasNearestEmptyPosition({required int row, required int column}) {
+    List<List<int>> directions = [
+      [1, 0], // Down
+      [-1, 0], // Up
+      [0, 1], // Right
+      [0, -1], // Left
+      [1, 1], // Diagonal Down-Right
+      [1, -1], // Diagonal Down-Left
+      [-1, 1], // Diagonal Up-Right
+      [-1, -1], // Diagonal Up-Left
+    ];
+
+    for (var dir in directions) {
+      int newRow = row + dir[0];
+      int newCol = column + dir[1];
+
+      if (newRow >= 0 &&
+          newRow < 3 && // Assuming a 3x3 matrix
+          newCol >= 0 &&
+          newCol < 3 && // Assuming a 3x3 matrix
+          matrix[newRow][newCol] == '') {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   static _setPosition({required int row, required int column, required String player}) {
@@ -90,25 +135,9 @@ class GameFunctions {
     return false;
   }
 
-  static (int row, int column) _getNearByEmptyPosition({required int row, required int column}) {
-    for (int r = -1; r <= 1; r++) {
-      for (int c = -1; c <= 1; c++) {
-        if (r == 0 && c == 0) continue;
-        int newRow = row + r;
-        int newCol = column + c;
-        if (newRow >= 0 &&
-            newRow < matrix.length &&
-            newCol >= 0 &&
-            newCol < matrix[newRow].length &&
-            matrix[newRow][newCol] == '') {
-          return (newRow, newCol);
-        }
-      }
-    }
-    return (row, column);
-  }
-
   static void reset() {
+    player = "X";
+    winner = "";
     matrix = [
       ['', '', ''],
       ['', '', ''],
