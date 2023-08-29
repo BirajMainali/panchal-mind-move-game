@@ -14,7 +14,7 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Flutter App',
       theme: ThemeData(
-        primaryColor: Colors.teal,
+        primaryColor: Colors.yellowAccent,
         fontFamily: 'Montserrat',
       ),
       home: const MyHomePage(),
@@ -27,8 +27,8 @@ class MyHomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.teal,
+    return const Scaffold(
+      backgroundColor: Colors.blue,
       body: Center(
         child: IconMatrixBox(),
       ),
@@ -37,6 +37,8 @@ class MyHomePage extends StatelessWidget {
 }
 
 class IconMatrixBox extends StatefulWidget {
+  const IconMatrixBox({super.key});
+
   @override
   State<IconMatrixBox> createState() => _IconMatrixBoxState();
 }
@@ -44,8 +46,9 @@ class IconMatrixBox extends StatefulWidget {
 class _IconMatrixBoxState extends State<IconMatrixBox> {
   @override
   Widget build(BuildContext context) {
-    const borderWidth = 2.0;
-
+    const borderWidth = 3.0;
+    const width = 300.0;
+    const height = 300.0;
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
@@ -66,11 +69,12 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
         ),
         const SizedBox(height: 20),
         Container(
-          width: 300,
-          height: 300,
+          width: width,
+          height: height,
           decoration: BoxDecoration(
-            color: Colors.teal,
-            border: Border.all(color: Colors.black, width: borderWidth),
+            color: Colors.black45,
+            borderRadius: BorderRadius.circular(5),
+            border: Border.all(color: Colors.blueGrey, width: borderWidth),
           ),
           child: Stack(
             children: [
@@ -80,7 +84,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 right: 0,
                 child: Container(
                   height: 2,
-                  color: Colors.black,
+                  color: Colors.white60,
                 ),
               ),
               Positioned(
@@ -89,7 +93,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 bottom: 0,
                 child: Container(
                   width: 1,
-                  color: Colors.black,
+                  color: Colors.white60,
                 ),
               ),
               Positioned(
@@ -98,7 +102,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 child: Container(
                   width: 424 + borderWidth,
                   height: 1,
-                  color: Colors.black,
+                  color: Colors.white60,
                   transform: Matrix4.rotationZ(45 * 0.0174533),
                 ),
               ),
@@ -108,7 +112,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 child: Container(
                   width: 424 + borderWidth,
                   height: 1,
-                  color: Colors.black,
+                  color: Colors.white60,
                   transform: Matrix4.rotationZ(-45 * 0.0174533),
                 ),
               ),
@@ -116,25 +120,25 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               _buildPositioned(
                 row: 0,
                 column: 0,
-                top: -4,
-                left: -4,
+                top: -6,
+                left: -6,
               ),
               // 0,1
-              _buildPositioned(row: 0, column: 1, top: -4, left: (300 / 2) - 12),
+              _buildPositioned(row: 0, column: 1, top: -6, left: (width / 2) - 20),
               // 0,2
-              _buildPositioned(row: 0, column: 2, top: -4, right: -4),
+              _buildPositioned(row: 0, column: 2, top: -6, right: -6),
               // 1,0
-              _buildPositioned(row: 1, column: 0, top: 300 / 2 - 10, left: -4),
+              _buildPositioned(row: 1, column: 0, top: width / 2 - 18, left: -6),
               // 1,1
-              _buildPositioned(row: 1, column: 1, top: 300 / 2 - 11, left: 300 / 2 - 12),
+              _buildPositioned(row: 1, column: 1, top: width / 2 - 20, left: width / 2 - 20),
               // 1,2
-              _buildPositioned(row: 1, column: 2, top: 300 / 2 - 10, right: -4),
+              _buildPositioned(row: 1, column: 2, top: width / 2 - 20, right: -6),
               // 2,0
-              _buildPositioned(row: 2, column: 0, top: 300 - 28, left: -4),
+              _buildPositioned(row: 2, column: 0, top: width - 38, left: -6),
               // 2,1
-              _buildPositioned(row: 2, column: 1, top: 300 - 30, left: (300 / 2) - 12),
+              _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 20),
               // 2,2
-              _buildPositioned(row: 2, column: 2, top: 300 - 28, right: -4),
+              _buildPositioned(row: 2, column: 2, top: width - 38, right: -6),
             ],
           ),
         ),
@@ -161,15 +165,14 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           setState(() {});
         },
         child: SizedBox(
-          width: 30,
-          height: 30,
+          width: 40,
+          height: 40,
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: GameFunctions.isActiveToReplace(r: row, c: column) ? Colors.yellow : Colors.white,
-              borderRadius: BorderRadius.circular(20),
+              borderRadius: BorderRadius.circular(10),
               border: Border.all(
-                color: Colors.red,
                 width: 1,
               ),
             ),
@@ -177,7 +180,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               child: Text(
                 GameFunctions.matrix[row][column],
                 style: const TextStyle(
-                  fontSize: 10,
+                  fontSize: 15,
+                  fontWeight: FontWeight.bold,
                 ),
               ),
             ),
