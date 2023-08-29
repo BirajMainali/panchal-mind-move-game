@@ -55,8 +55,10 @@ class GameFunctions {
           return;
         }
         if (!_canSetPositionTo(row: row, column: column)) return;
-        var distance = (row - activeRow).abs() + (column - activeColumn).abs();
-        if (distance != 1) return;
+        if (activeRow != 1 && activeColumn != 1) {
+          var distance = (row - activeRow).abs() + (column - activeColumn).abs();
+          if (distance != 1) return;
+        }
         matrix[activeRow][activeColumn] = '';
         matrix[row][column] = player;
         active = (null, null);

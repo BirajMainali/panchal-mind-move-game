@@ -92,7 +92,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               const Icon(
                 Icons.circle,
                 color: Colors.black,
-                size: 25,
+                size: 20,
               ),
           ],
         ),
@@ -170,12 +170,11 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 // 2,1
                 _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 18),
                 // 2,2
-                _buildPositioned(row: 2, column: 2, top: width - 38, right: -6),
+                _buildPositioned(row: 2, column: 2, top: width - 40, right: -6),
               ],
             ),
           ),
         ),
-        const SizedBox(height: 20),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -183,7 +182,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               const Icon(
                 Icons.circle,
                 color: Colors.redAccent,
-                size: 25,
+                size: 20,
               ),
           ],
         ),
@@ -231,7 +230,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
 
   String getPlayer(String player) {
     return player == 'X'
-        ? '⚫'
+        ? '🔵'
         : player == 'Y'
             ? '️🔴'
             : '';
