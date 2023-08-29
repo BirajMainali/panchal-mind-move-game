@@ -28,7 +28,7 @@ class MyHomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Scaffold(
-      backgroundColor: Colors.blue,
+      backgroundColor: Colors.indigoAccent,
       body: Center(
         child: IconMatrixBox(),
       ),
@@ -61,7 +61,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
             ),
           ),
         Text(
-          'Turn: ${GameFunctions.player}',
+          'Turn: ${getPlayer(GameFunctions.player)}',
           style: const TextStyle(
             fontSize: 30,
             color: Colors.white,
@@ -72,9 +72,12 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           width: width,
           height: height,
           decoration: BoxDecoration(
-            color: Colors.black45,
+            image: const DecorationImage(
+              image: AssetImage('assets/images/board-wood.jpeg'),
+              fit: BoxFit.cover,
+            ),
             borderRadius: BorderRadius.circular(5),
-            border: Border.all(color: Colors.blueGrey, width: borderWidth),
+            border: Border.all(color: Colors.white60, width: borderWidth),
           ),
           child: Stack(
             children: [
@@ -83,8 +86,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 top: 150,
                 right: 0,
                 child: Container(
-                  height: 2,
-                  color: Colors.white60,
+                  height: 3,
+                  color: Colors.black45,
                 ),
               ),
               Positioned(
@@ -92,8 +95,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 left: 150,
                 bottom: 0,
                 child: Container(
-                  width: 1,
-                  color: Colors.white60,
+                  width: 3,
+                  color: Colors.black45,
                 ),
               ),
               Positioned(
@@ -101,8 +104,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 top: 0,
                 child: Container(
                   width: 424 + borderWidth,
-                  height: 1,
-                  color: Colors.white60,
+                  height: 3,
+                  color: Colors.black45,
                   transform: Matrix4.rotationZ(45 * 0.0174533),
                 ),
               ),
@@ -111,8 +114,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 bottom: 0,
                 child: Container(
                   width: 424 + borderWidth,
-                  height: 1,
-                  color: Colors.white60,
+                  height: 3,
+                  color: Colors.black45,
                   transform: Matrix4.rotationZ(-45 * 0.0174533),
                 ),
               ),
@@ -136,7 +139,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               // 2,0
               _buildPositioned(row: 2, column: 0, top: width - 38, left: -6),
               // 2,1
-              _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 20),
+              _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 18),
               // 2,2
               _buildPositioned(row: 2, column: 2, top: width - 38, right: -6),
             ],
@@ -173,15 +176,16 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: GameFunctions.isActiveToReplace(r: row, c: column) ? Colors.yellow : Colors.white,
-              borderRadius: BorderRadius.circular(10),
+              color: GameFunctions.isActiveToReplace(r: row, c: column) ? Colors.yellowAccent : Colors.white,
+              borderRadius: BorderRadius.circular(15),
               border: Border.all(
-                width: 1,
+                color: Colors.indigoAccent,
+                width: 2,
               ),
             ),
             child: Center(
               child: Text(
-                GameFunctions.matrix[row][column],
+                getPlayer(GameFunctions.matrix[row][column]),
                 style: const TextStyle(
                   fontSize: 15,
                   fontWeight: FontWeight.bold,
@@ -192,5 +196,13 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
         ),
       ),
     );
+  }
+
+  String getPlayer(String player) {
+    return player == 'X'
+        ? '⚫'
+        : player == 'Y'
+            ? '️🔴'
+            : '';
   }
 }

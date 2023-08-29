@@ -16,7 +16,7 @@ class GameFunctions {
     player = player == "X" ? "Y" : "X";
   }
 
-  static bool _isInitialPinsArePlaced() {
+  static int getRemainingPins(String player) {
     int count = 0;
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix.length; j++) {
@@ -25,6 +25,11 @@ class GameFunctions {
         }
       }
     }
+    return count;
+  }
+
+  static bool _isInitialPinsArePlaced() {
+    int count = getRemainingPins(player);
     return count >= 3;
   }
 
@@ -39,6 +44,13 @@ class GameFunctions {
       if (active != (null, null)) {
         var activeRow = active.$1!;
         var activeColumn = active.$2!;
+        if (activeRow == row && activeColumn == column) {
+          active = (null, null);
+          return;
+        }
+        if (!_canSetPositionTo(row: row, column: column)) return;
+        var distance = (row - activeRow).abs() + (column - activeColumn).abs();
+        if (distance != 1) return;
         matrix[activeRow][activeColumn] = '';
         matrix[row][column] = player;
         active = (null, null);
@@ -55,31 +67,36 @@ class GameFunctions {
   }
 
   static bool _hasNearestEmptyPosition({required int row, required int column}) {
-    // Check all adjacent positions, including diagonals
-    List<List<int>> directions = [
-      [1, 0], // Down
-      [-1, 0], // Up
-      [0, 1], // Right
-      [0, -1], // Left
-      [1, 1], // Diagonal Down-Right
-      [1, -1], // Diagonal Down-Left
-      [-1, 1], // Diagonal Up-Right
-      [-1, -1], // Diagonal Up-Left
-    ];
-
-    for (var dir in directions) {
-      int newRow = row + dir[0];
-      int newCol = column + dir[1];
-
-      if (newRow >= 0 &&
-          newRow < 3 && // Assuming a 3x3 matrix
-          newCol >= 0 &&
-          newCol < 3 && // Assuming a 3x3 matrix
-          matrix[newRow][newCol] == '') {
-        return true;
-      }
+    if (row == 0 && column == 0) {
+      return matrix[row][column + 1] == '' || matrix[row + 1][column] == '';
     }
-
+    if (row == 0 && column == 1) {
+      return matrix[row][column - 1] == '' || matrix[row][column + 1] == '' || matrix[row + 1][column] == '';
+    }
+    if (row == 0 && column == 2) {
+      return matrix[row][column - 1] == '' || matrix[row + 1][column] == '';
+    }
+    if (row == 1 && column == 0) {
+      return matrix[row][column + 1] == '' || matrix[row - 1][column] == '' || matrix[row + 1][column] == '';
+    }
+    if (row == 1 && column == 1) {
+      return matrix[row][column - 1] == '' ||
+          matrix[row][column + 1] == '' ||
+          matrix[row - 1][column] == '' ||
+          matrix[row + 1][column] == '';
+    }
+    if (row == 1 && column == 2) {
+      return matrix[row][column - 1] == '' || matrix[row - 1][column] == '' || matrix[row + 1][column] == '';
+    }
+    if (row == 2 && column == 0) {
+      return matrix[row][column + 1] == '' || matrix[row - 1][column] == '';
+    }
+    if (row == 2 && column == 1) {
+      return matrix[row][column - 1] == '' || matrix[row][column + 1] == '' || matrix[row - 1][column] == '';
+    }
+    if (row == 2 && column == 2) {
+      return matrix[row][column - 1] == '' || matrix[row - 1][column] == '';
+    }
     return false;
   }
 
