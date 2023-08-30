@@ -141,25 +141,25 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (GameFunctions.IsPlayer1())
+                if (GameFunctions.isPlayer1())
                   const Icon(
                     Icons.person_2_rounded,
                     color: Colors.green,
                     size: 40,
                   ),
-                ..._buildTurnIndicator(GameFunctions.getRemainingPins(GameFunctions.player1), Colors.blue),
+                ..._buildTurnIndicator(GameFunctions.getRemainingPinsOfPlayer(GameFunctions.player1), Colors.blue),
               ],
             ),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                if (GameFunctions.IsPlayer2())
+                if (GameFunctions.isPlayer2())
                   const Icon(
                     Icons.person_2_rounded,
                     color: Colors.green,
                     size: 40,
                   ),
-                ..._buildTurnIndicator(GameFunctions.getRemainingPins(GameFunctions.player2), Colors.red),
+                ..._buildTurnIndicator(GameFunctions.getRemainingPinsOfPlayer(GameFunctions.player2), Colors.red),
               ],
             ),
           ],
@@ -197,7 +197,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
       right: right,
       child: GestureDetector(
         onTap: () {
-          GameFunctions.placePin(row: row, column: column);
+          GameFunctions.placePinAt(row: row, column: column);
           setState(() {});
         },
         child: SizedBox(
@@ -206,7 +206,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: GameFunctions.isActiveToReplace(r: row, c: column) ? Colors.yellowAccent : Colors.white,
+              color: GameFunctions.isChosenToReplace(row: row, column: column) ? Colors.yellowAccent : Colors.white,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
                 color: Colors.indigoAccent,

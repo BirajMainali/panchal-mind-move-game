@@ -1,11 +1,14 @@
 import 'package:vibration/vibration.dart';
 
 class GameFunctions {
-  static String player = "X";
+  static String currentPlayer = "X";
   static String player1 = "X";
   static String player2 = "Y";
+
   static String winner = "";
+
   static (int? row, int? column) active = (null, null);
+
   static List<List<String>> matrix = [
     ['', '', ''],
     ['', '', ''],
@@ -13,14 +16,14 @@ class GameFunctions {
   ];
 
   static void _setTurn() {
-    if (checkWin(player)) {
-      winner = player;
+    if (checkWin(currentPlayer)) {
+      winner = currentPlayer;
       return;
     }
-    player = player == player1 ? player2 : player1;
+    currentPlayer = currentPlayer == player1 ? player2 : player1;
   }
 
-  static int getPins(String player) {
+  static int getPlacedPinsOfPlayer(String player) {
     int count = 0;
     for (int i = 0; i < matrix.length; i++) {
       for (int j = 0; j < matrix.length; j++) {
@@ -32,107 +35,94 @@ class GameFunctions {
     return count;
   }
 
-  static int getRemainingPins(String player) {
-    return 3 - getPins(player);
+  static int getRemainingPinsOfPlayer(String player) {
+    return 3 - getPlacedPinsOfPlayer(player);
   }
 
-  static bool _isInitialPinsArePlaced() {
-    int count = getPins(player);
+  static bool _isDefaultPinsArePlaced() {
+    int count = getPlacedPinsOfPlayer(currentPlayer);
     return count >= 3;
   }
 
-  static bool isActiveToReplace({required int r, required int c}) {
-    return active == (r, c) && _isInitialPinsArePlaced();
+  static bool isChosenToReplace({required int row, required int column}) {
+    return active == (row, column) && _isDefaultPinsArePlaced();
   }
 
-  static void placePin({required int row, required int column}) {
-    var isInitialPinsArePlaced = _isInitialPinsArePlaced();
+  static bool isCheckedAt({required int row, required column}) {
+    return active == (row, column);
+  }
 
-    if (isInitialPinsArePlaced) {
-      if (active != (null, null)) {
-        var activeRow = active.$1!;
-        var activeColumn = active.$2!;
-        if (activeRow == row && activeColumn == column) {
-          active = (null, null);
-          return;
+  static void placePinAt({required int row, required int column}) {
+    var defaultPinsArePlaced = _isDefaultPinsArePlaced();
+    var chosenTarget = (active != (null, null));
+
+    if (defaultPinsArePlaced && matrix[row][column] != "" && matrix[row][column] != currentPlayer) {
+      return;
+    }
+
+    if (isCheckedAt(row: row, column: column)) {
+      active = (null, null);
+      return;
+    }
+
+    if (defaultPinsArePlaced && !chosenTarget) {
+      active = (row, column);
+      return;
+    }
+
+    if (isOccupied(row: row, column: column)) return;
+    if (defaultPinsArePlaced && chosenTarget) {
+      var chosenRow = active.$1!;
+      var chosenColumn = active.$2!;
+      var canIgnore =
+          canIgnoreTheCurrentMove(chosenRow: chosenRow, chosenColumn: chosenColumn, row: row, column: column);
+      if (canIgnore) {
+        matrix[chosenRow][chosenColumn] = "";
+        _setPosition(row: row, column: column, player: currentPlayer);
+        return;
+      }
+      if (!canIgnore) {
+        var hasRowCombination = chosenRow == row;
+        var hasColumnCombination = chosenColumn == column;
+        if (hasRowCombination) {
+          var colDiff = (chosenColumn - column).abs();
+          if (colDiff == 1) {
+            matrix[chosenRow][chosenColumn] = "";
+            _setPosition(row: row, column: column, player: currentPlayer);
+          }
         }
-        if (!_canSetPositionTo(row: row, column: column)) return;
-        if ((activeRow != 1 && activeColumn != 1) && (row != 1 && column != 1)) {
-          var distance = (row - activeRow).abs() + (column - activeColumn).abs();
-          if (distance != 1) return;
-        }
-        matrix[activeRow][activeColumn] = '';
-        matrix[row][column] = player;
-        active = (null, null);
-        _setTurn();
-      } else {
-        var hasNearestEmptyPosition = _hasNearestEmptyPosition(row: row, column: column);
-        if (hasNearestEmptyPosition && matrix[row][column] == player) {
-          active = (row, column);
+        if (hasColumnCombination) {
+          var rowDiff = (chosenRow - row).abs();
+          if (rowDiff == 1) {
+            matrix[chosenRow][chosenColumn] = "";
+            _setPosition(row: row, column: column, player: currentPlayer);
+          }
         }
       }
     } else {
-      _setPosition(row: row, column: column, player: player);
+      _setPosition(row: row, column: column, player: currentPlayer);
     }
   }
 
-  static bool _hasNearestEmptyPosition({required int row, required int column}) {
-    if (row == 0 && column == 0) {
-      return matrix[row][column + 1] == '' || matrix[row + 1][column] == '';
+  static bool isOccupied({required int row, required int column}) {
+    var occupied = matrix[row][column] != '';
+    if (occupied) {
+      Vibration.vibrate(duration: 250);
     }
-    if (row == 0 && column == 1) {
-      return matrix[row][column - 1] == '' || matrix[row][column + 1] == '' || matrix[row + 1][column] == '';
-    }
-    if (row == 0 && column == 2) {
-      return matrix[row][column - 1] == '' || matrix[row + 1][column] == '';
-    }
-    if (row == 1 && column == 0) {
-      return matrix[row][column + 1] == '' || matrix[row - 1][column] == '' || matrix[row + 1][column] == '';
-    }
-    if (row == 1 && column == 1) {
-      return matrix[row][column - 1] == '' ||
-          matrix[row][column + 1] == '' ||
-          matrix[row - 1][column] == '' ||
-          matrix[row + 1][column] == '';
-    }
-    if (row == 1 && column == 2) {
-      return matrix[row][column - 1] == '' || matrix[row - 1][column] == '' || matrix[row + 1][column] == '';
-    }
-    if (row == 2 && column == 0) {
-      return matrix[row][column + 1] == '' || matrix[row - 1][column] == '';
-    }
-    if (row == 2 && column == 1) {
-      return matrix[row][column - 1] == '' || matrix[row][column + 1] == '' || matrix[row - 1][column] == '';
-    }
-    if (row == 2 && column == 2) {
-      return matrix[row][column - 1] == '' || matrix[row - 1][column] == '';
-    }
-    return false;
+    return occupied;
+  }
+
+  static bool canIgnoreTheCurrentMove(
+      {required int chosenRow, required int chosenColumn, required int row, required int column}) {
+    var chosenTargetIsOnCenterOfMatrix = (chosenRow == 1 && chosenColumn == 1);
+    var currentPositionIsCenterOfMatrix = (row == 1 && column == 1);
+    return chosenTargetIsOnCenterOfMatrix || currentPositionIsCenterOfMatrix;
   }
 
   static _setPosition({required int row, required int column, required String player}) {
-    if (!_canSetPositionTo(row: row, column: column)) return;
     matrix[row][column] = player;
+    active = (null, null);
     _setTurn();
-  }
-
-  static replacePin({required int row, required int column}) {
-    _replacePositionOf(row: row, column: column, player: player);
-  }
-
-  static void _replacePositionOf({required int row, required int column, required String player}) {
-    if (!_canSetPositionTo(row: row, column: column)) return;
-    matrix[row][column] = 'Y';
-    _setTurn();
-  }
-
-  static bool _canSetPositionTo({required int row, required int column}) {
-    if (checkWin(player)) return false;
-    var canSet = matrix[row][column] == '' || matrix[row][column] == player;
-    if (!canSet) {
-      Vibration.vibrate(duration: 250);
-    }
-    return canSet;
   }
 
   static bool checkWin(String identifier) {
@@ -168,7 +158,7 @@ class GameFunctions {
   }
 
   static void reset() {
-    player = "X";
+    currentPlayer = "X";
     winner = "";
     matrix = [
       ['', '', ''],
@@ -177,6 +167,7 @@ class GameFunctions {
     ];
   }
 
-  static IsPlayer1() => player == player1;
-  static IsPlayer2() => player == player2;
+  static isPlayer1() => currentPlayer == player1;
+
+  static isPlayer2() => currentPlayer == player2;
 }
