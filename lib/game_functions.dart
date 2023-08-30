@@ -66,6 +66,7 @@ class GameFunctions {
     }
 
     if (defaultPinsArePlaced && !chosenTarget) {
+      if (matrix[row][column] == '') return;
       active = (row, column);
       return;
     }
