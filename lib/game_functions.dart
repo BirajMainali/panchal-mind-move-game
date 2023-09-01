@@ -57,6 +57,7 @@ class GameFunctions {
     var chosenTarget = (active != (null, null));
 
     if (defaultPinsArePlaced && matrix[row][column] != "" && matrix[row][column] != currentPlayer) {
+      Vibration.vibrate(duration: 250);
       return;
     }
 
@@ -66,7 +67,10 @@ class GameFunctions {
     }
 
     if (defaultPinsArePlaced && !chosenTarget) {
-      if (matrix[row][column] == '') return;
+      if (matrix[row][column] == '') {
+        Vibration.vibrate(duration: 250);
+        return;
+      }
       active = (row, column);
       return;
     }
