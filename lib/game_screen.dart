@@ -7,10 +7,17 @@ class GameScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      backgroundColor: Color(0xFFa2d2ff),
-      body: Center(
-        child: IconMatrixBox(),
+    return Scaffold(
+      backgroundColor: const Color(0xFFa2d2ff),
+      body: Container(
+        decoration: const BoxDecoration(
+            image: DecorationImage(
+          image: AssetImage('assets/images/board-wood.jpeg'),
+          fit: BoxFit.cover,
+        )),
+        child: const Center(
+          child: IconMatrixBox(),
+        ),
       ),
     );
   }
@@ -27,25 +34,21 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
   @override
   Widget build(BuildContext context) {
     const borderWidth = 3.0;
-    const width = 300.0;
-    const height = 300.0;
+    const width = 350.0;
+    const height = 350.0;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Center(
-              child: Text(
-                "✨✨✨",
-                style: TextStyle(
-                  fontWeight: FontWeight.bold,
-                  fontSize: 30,
-                ),
-              ),
+        const Center(
+          child: Text(
+            "Panchal Game",
+            style: TextStyle(
+              color: Colors.indigoAccent,
+              fontWeight: FontWeight.bold,
+              fontSize: 30,
             ),
-          ],
+          ),
         ),
         Center(
           child: Container(
@@ -61,17 +64,17 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 ),
               ],
               image: const DecorationImage(
-                image: AssetImage('assets/images/board-wood.jpeg'),
+                image: AssetImage('assets/images/bg.jpg'),
                 fit: BoxFit.cover,
               ),
-              borderRadius: BorderRadius.circular(5),
+              borderRadius: BorderRadius.circular(10),
               border: Border.all(color: Colors.white60, width: borderWidth),
             ),
             child: Stack(
               children: [
                 Positioned(
                   left: 0,
-                  top: 150,
+                  top: height / 2 - 3.5,
                   right: 0,
                   child: Container(
                     height: 3,
@@ -80,7 +83,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 ),
                 Positioned(
                   top: 0,
-                  left: 150,
+                  left: width / 2 - 3.5,
                   bottom: 0,
                   child: Container(
                     width: 3,
@@ -91,7 +94,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                   left: 0,
                   top: 0,
                   child: Container(
-                    width: 424 + borderWidth,
+                    width: width * 2,
                     height: 3,
                     color: Colors.black45,
                     transform: Matrix4.rotationZ(45 * 0.0174533),
@@ -101,7 +104,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                   left: 0,
                   bottom: 0,
                   child: Container(
-                    width: 424 + borderWidth,
+                    width: width * 2 - 3,
                     height: 3,
                     color: Colors.black45,
                     transform: Matrix4.rotationZ(-45 * 0.0174533),
@@ -111,25 +114,25 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                 _buildPositioned(
                   row: 0,
                   column: 0,
-                  top: -6,
-                  left: -6,
+                  top: -5,
+                  left: -5,
                 ),
                 // 0,1
-                _buildPositioned(row: 0, column: 1, top: -6, left: (width / 2) - 20),
+                _buildPositioned(row: 0, column: 1, top: -5, left: (width / 2) - 20),
                 // 0,2
-                _buildPositioned(row: 0, column: 2, top: -6, right: -6),
+                _buildPositioned(row: 0, column: 2, top: -5, right: -5),
                 // 1,0
-                _buildPositioned(row: 1, column: 0, top: width / 2 - 18, left: -6),
+                _buildPositioned(row: 1, column: 0, top: width / 2 - 20, left: -5),
                 // 1,1
                 _buildPositioned(row: 1, column: 1, top: width / 2 - 20, left: width / 2 - 20),
                 // 1,2
-                _buildPositioned(row: 1, column: 2, top: width / 2 - 20, right: -6),
+                _buildPositioned(row: 1, column: 2, top: width / 2 - 20, right: -5),
                 // 2,0
-                _buildPositioned(row: 2, column: 0, top: width - 38, left: -6),
+                _buildPositioned(row: 2, column: 0, top: width - 38, left: -5),
                 // 2,1
-                _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 18),
+                _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 20),
                 // 2,2
-                _buildPositioned(row: 2, column: 2, top: width - 40, right: -6),
+                _buildPositioned(row: 2, column: 2, top: width - 40, right: -5),
               ],
             ),
           ),
@@ -209,7 +212,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               color: GameFunctions.isChosenToReplace(row: row, column: column) ? Colors.yellowAccent : Colors.white,
               borderRadius: BorderRadius.circular(15),
               border: Border.all(
-                color: Colors.indigoAccent,
+                color: Colors.blueGrey,
                 width: 2,
               ),
             ),
@@ -230,9 +233,9 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
 
   String getPlayer(String player) {
     return player == 'X'
-        ? '🔵'
+        ? '💙'
         : player == 'Y'
-            ? '️🔴'
+            ? '️❤️'
             : '';
   }
 }
