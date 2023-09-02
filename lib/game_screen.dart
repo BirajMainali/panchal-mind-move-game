@@ -40,8 +40,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
   @override
   Widget build(BuildContext context) {
     const borderWidth = 3.0;
-    const width = 350.0;
-    const height = 350.0;
+    const width = 330.0;
+    const height = 330.0;
     return Column(
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
