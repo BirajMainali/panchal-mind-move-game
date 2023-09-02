@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 
 import 'game_functions.dart';
 
@@ -8,7 +9,6 @@ class GameScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFa2d2ff),
       body: Container(
         decoration: const BoxDecoration(
             image: DecorationImage(
@@ -32,6 +32,12 @@ class IconMatrixBox extends StatefulWidget {
 
 class _IconMatrixBoxState extends State<IconMatrixBox> {
   @override
+  void initState() {
+    super.initState();
+    Future.delayed(Duration(seconds: 1), () => FlutterNativeSplash.remove());
+  }
+
+  @override
   Widget build(BuildContext context) {
     const borderWidth = 3.0;
     const width = 350.0;
@@ -40,15 +46,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
       mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.center,
       children: [
-        const Center(
-          child: Text(
-            "Panchal Game",
-            style: TextStyle(
-              color: Colors.indigoAccent,
-              fontWeight: FontWeight.bold,
-              fontSize: 30,
-            ),
-          ),
+        SizedBox(
+          height: 40,
         ),
         Center(
           child: Container(
@@ -118,21 +117,21 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                   left: -5,
                 ),
                 // 0,1
-                _buildPositioned(row: 0, column: 1, top: -5, left: (width / 2) - 20),
+                _buildPositioned(row: 0, column: 1, top: -5, left: (width / 2) - 28),
                 // 0,2
                 _buildPositioned(row: 0, column: 2, top: -5, right: -5),
                 // 1,0
-                _buildPositioned(row: 1, column: 0, top: width / 2 - 20, left: -5),
+                _buildPositioned(row: 1, column: 0, top: width / 2 - 28, left: -5),
                 // 1,1
-                _buildPositioned(row: 1, column: 1, top: width / 2 - 20, left: width / 2 - 20),
+                _buildPositioned(row: 1, column: 1, top: width / 2 - 28, left: width / 2 - 28),
                 // 1,2
-                _buildPositioned(row: 1, column: 2, top: width / 2 - 20, right: -5),
+                _buildPositioned(row: 1, column: 2, top: width / 2 - 28, right: -5),
                 // 2,0
-                _buildPositioned(row: 2, column: 0, top: width - 38, left: -5),
+                _buildPositioned(row: 2, column: 0, top: width - 48, left: -3),
                 // 2,1
-                _buildPositioned(row: 2, column: 1, top: width - 38, left: (width / 2) - 20),
+                _buildPositioned(row: 2, column: 1, top: width - 48, left: (width / 2) - 28),
                 // 2,2
-                _buildPositioned(row: 2, column: 2, top: width - 40, right: -5),
+                _buildPositioned(row: 2, column: 2, top: width - 48, right: -3),
               ],
             ),
           ),
@@ -174,21 +173,34 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               Text(
                 'Winner : ${getPlayer(GameFunctions.winner)}',
                 style: const TextStyle(
-                  color: Colors.white,
+                  color: Colors.indigoAccent,
                   fontSize: 30,
                   fontWeight: FontWeight.bold,
                 ),
               ),
           ],
         ),
-        if (GameFunctions.winner.isNotEmpty)
-          Center(
-              child: ElevatedButton(
-                  onPressed: () {
-                    GameFunctions.reset();
-                    setState(() {});
-                  },
-                  child: const Text('Reset'))),
+        Center(
+            child: SizedBox(
+          height: 50,
+          width: 120,
+          child: ElevatedButton(
+              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.indigoAccent)),
+              onPressed: () {
+                GameFunctions.reset();
+                setState(() {});
+              },
+              child: Row(
+                children: [
+                  Center(
+                    child: const Text(
+                      'Start Match',
+                      style: TextStyle(fontSize: 15),
+                    ),
+                  ),
+                ],
+              )),
+        )),
       ],
     );
   }
@@ -204,8 +216,8 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           setState(() {});
         },
         child: SizedBox(
-          width: 40,
-          height: 40,
+          width: 50,
+          height: 50,
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
@@ -220,7 +232,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
               child: Text(
                 getPlayer(GameFunctions.matrix[row][column]),
                 style: const TextStyle(
-                  fontSize: 15,
+                  fontSize: 18,
                   fontWeight: FontWeight.bold,
                 ),
               ),
