@@ -185,21 +185,24 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           height: 50,
           width: 120,
           child: ElevatedButton(
-              style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.indigoAccent)),
-              onPressed: () {
-                GameFunctions.reset();
-                setState(() {});
-              },
-              child: Row(
-                children: [
-                  Center(
-                    child: const Text(
-                      'Start Match',
-                      style: TextStyle(fontSize: 15),
-                    ),
+            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.indigoAccent)),
+            onPressed: () {
+              _showStartMatchConfirmationDialog(
+                context,
+                () => setState(() {}),
+              );
+            },
+            child: Row(
+              children: [
+                Center(
+                  child: const Text(
+                    'Start Game',
+                    style: TextStyle(fontSize: 15),
                   ),
-                ],
-              )),
+                ),
+              ],
+            ),
+          ),
         )),
       ],
     );
@@ -222,7 +225,7 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
             alignment: Alignment.center,
             decoration: BoxDecoration(
               color: GameFunctions.isChosenToReplace(row: row, column: column) ? Colors.yellowAccent : Colors.white,
-              borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: Colors.blueGrey,
                 width: 2,
@@ -245,10 +248,38 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
 
   String getPlayer(String player) {
     return player == 'X'
-        ? '💙'
+        ? '⭕'
         : player == 'Y'
-            ? '️❤️'
+            ? '️🔵'
             : '';
+  }
+
+  void _showStartMatchConfirmationDialog(BuildContext context, VoidCallback callback) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirmation'),
+          content: Text('Are you sure you want to start the match?'),
+          actions: <Widget>[
+            TextButton(
+              child: Text('Cancel'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text('Start'),
+              onPressed: () {
+                GameFunctions.reset();
+                callback();
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 }
 

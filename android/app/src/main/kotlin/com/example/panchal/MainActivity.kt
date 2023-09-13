@@ -1,4 +1,4 @@
-package com.example.panchal
+package com.codesparks.paanchal
 
 import io.flutter.embedding.android.FlutterActivity
 
