@@ -117,19 +117,27 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                   left: -5,
                 ),
                 // 0,1
-                _buildPositioned(row: 0, column: 1, top: -5, left: (width / 2) - 28),
+                _buildPositioned(
+                    row: 0, column: 1, top: -5, left: (width / 2) - 28),
                 // 0,2
                 _buildPositioned(row: 0, column: 2, top: -5, right: -5),
                 // 1,0
-                _buildPositioned(row: 1, column: 0, top: width / 2 - 28, left: -5),
+                _buildPositioned(
+                    row: 1, column: 0, top: width / 2 - 28, left: -5),
                 // 1,1
-                _buildPositioned(row: 1, column: 1, top: width / 2 - 28, left: width / 2 - 28),
+                _buildPositioned(
+                    row: 1,
+                    column: 1,
+                    top: width / 2 - 28,
+                    left: width / 2 - 28),
                 // 1,2
-                _buildPositioned(row: 1, column: 2, top: width / 2 - 28, right: -5),
+                _buildPositioned(
+                    row: 1, column: 2, top: width / 2 - 28, right: -5),
                 // 2,0
                 _buildPositioned(row: 2, column: 0, top: width - 48, left: -3),
                 // 2,1
-                _buildPositioned(row: 2, column: 1, top: width - 48, left: (width / 2) - 28),
+                _buildPositioned(
+                    row: 2, column: 1, top: width - 48, left: (width / 2) - 28),
                 // 2,2
                 _buildPositioned(row: 2, column: 2, top: width - 48, right: -3),
               ],
@@ -149,7 +157,10 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                     color: Colors.green,
                     size: 40,
                   ),
-                ..._buildTurnIndicator(GameFunctions.getRemainingPinsOfPlayer(GameFunctions.player1), Colors.blue),
+                ..._buildTurnIndicator(
+                    GameFunctions.getRemainingPinsOfPlayer(
+                        GameFunctions.player1),
+                    Colors.blue),
               ],
             ),
             Row(
@@ -161,7 +172,10 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
                     color: Colors.green,
                     size: 40,
                   ),
-                ..._buildTurnIndicator(GameFunctions.getRemainingPinsOfPlayer(GameFunctions.player2), Colors.red),
+                ..._buildTurnIndicator(
+                    GameFunctions.getRemainingPinsOfPlayer(
+                        GameFunctions.player2),
+                    Colors.red),
               ],
             ),
           ],
@@ -185,7 +199,9 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           height: 50,
           width: 120,
           child: ElevatedButton(
-            style: ButtonStyle(backgroundColor: MaterialStateProperty.all(Colors.indigoAccent)),
+            style: ButtonStyle(
+                backgroundColor:
+                    MaterialStateProperty.all(Colors.indigoAccent)),
             onPressed: () {
               _showStartMatchConfirmationDialog(
                 context,
@@ -208,7 +224,12 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
     );
   }
 
-  _buildPositioned({required int row, required int column, double? top, double? left, double? right}) {
+  _buildPositioned(
+      {required int row,
+      required int column,
+      double? top,
+      double? left,
+      double? right}) {
     return Positioned(
       top: top,
       left: left,
@@ -224,7 +245,9 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
           child: Container(
             alignment: Alignment.center,
             decoration: BoxDecoration(
-              color: GameFunctions.isChosenToReplace(row: row, column: column) ? Colors.yellowAccent : Colors.white,
+              color: GameFunctions.isChosenToReplace(row: row, column: column)
+                  ? Colors.yellowAccent
+                  : Colors.white,
               borderRadius: BorderRadius.circular(10),
               border: Border.all(
                 color: Colors.blueGrey,
@@ -248,13 +271,14 @@ class _IconMatrixBoxState extends State<IconMatrixBox> {
 
   String getPlayer(String player) {
     return player == 'X'
-        ? '⭕'
+        ? '🔵'
         : player == 'Y'
-            ? '️🔵'
+            ? '⭕'
             : '';
   }
 
-  void _showStartMatchConfirmationDialog(BuildContext context, VoidCallback callback) {
+  void _showStartMatchConfirmationDialog(
+      BuildContext context, VoidCallback callback) {
     showDialog(
       context: context,
       builder: (BuildContext context) {
