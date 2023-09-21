@@ -56,7 +56,9 @@ class GameFunctions {
     var defaultPinsArePlaced = _isDefaultPinsArePlaced();
     var chosenTarget = (active != (null, null));
 
-    if (defaultPinsArePlaced && matrix[row][column] != "" && matrix[row][column] != currentPlayer) {
+    if (defaultPinsArePlaced &&
+        matrix[row][column] != "" &&
+        matrix[row][column] != currentPlayer) {
       Vibration.vibrate(duration: 250);
       return;
     }
@@ -79,8 +81,11 @@ class GameFunctions {
     if (defaultPinsArePlaced && chosenTarget) {
       var chosenRow = active.$1!;
       var chosenColumn = active.$2!;
-      var canIgnore =
-          canIgnoreTheCurrentMove(chosenRow: chosenRow, chosenColumn: chosenColumn, row: row, column: column);
+      var canIgnore = canIgnoreTheCurrentMove(
+          chosenRow: chosenRow,
+          chosenColumn: chosenColumn,
+          row: row,
+          column: column);
       if (canIgnore) {
         matrix[chosenRow][chosenColumn] = "";
         _setPosition(row: row, column: column, player: currentPlayer);
@@ -118,25 +123,33 @@ class GameFunctions {
   }
 
   static bool canIgnoreTheCurrentMove(
-      {required int chosenRow, required int chosenColumn, required int row, required int column}) {
+      {required int chosenRow,
+      required int chosenColumn,
+      required int row,
+      required int column}) {
     var chosenTargetIsOnCenterOfMatrix = (chosenRow == 1 && chosenColumn == 1);
     var currentPositionIsCenterOfMatrix = (row == 1 && column == 1);
     return chosenTargetIsOnCenterOfMatrix || currentPositionIsCenterOfMatrix;
   }
 
-  static _setPosition({required int row, required int column, required String player}) {
+  static _setPosition(
+      {required int row, required int column, required String player}) {
     matrix[row][column] = player;
     active = (null, null);
     _setTurn();
   }
 
   static bool checkWin(String identifier) {
-    return _checkRows(identifier) || _checkColumns(identifier) || _checkDiagonals(identifier);
+    return _checkRows(identifier) ||
+        _checkColumns(identifier) ||
+        _checkDiagonals(identifier);
   }
 
   static bool _checkRows(String identifier) {
     for (int i = 0; i < 3; i++) {
-      if (matrix[i][0] == identifier && matrix[i][1] == identifier && matrix[i][2] == identifier) {
+      if (matrix[i][0] == identifier &&
+          matrix[i][1] == identifier &&
+          matrix[i][2] == identifier) {
         return true;
       }
     }
@@ -145,7 +158,9 @@ class GameFunctions {
 
   static bool _checkColumns(String identifier) {
     for (int i = 0; i < 3; i++) {
-      if (matrix[0][i] == identifier && matrix[1][i] == identifier && matrix[2][i] == identifier) {
+      if (matrix[0][i] == identifier &&
+          matrix[1][i] == identifier &&
+          matrix[2][i] == identifier) {
         return true;
       }
     }
@@ -153,10 +168,14 @@ class GameFunctions {
   }
 
   static bool _checkDiagonals(String identifier) {
-    if (matrix[0][0] == identifier && matrix[1][1] == identifier && matrix[2][2] == identifier) {
+    if (matrix[0][0] == identifier &&
+        matrix[1][1] == identifier &&
+        matrix[2][2] == identifier) {
       return true;
     }
-    if (matrix[0][2] == identifier && matrix[1][1] == identifier && matrix[2][0] == identifier) {
+    if (matrix[0][2] == identifier &&
+        matrix[1][1] == identifier &&
+        matrix[2][0] == identifier) {
       return true;
     }
     return false;
